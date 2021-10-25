@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			background: #262626;
+			font-family: arial;
+
+		}
+		.loader{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+		}
+		.loader h1{
+			margin: 0;
+			padding: 0;
+			text-transform: uppercase;
+			font-size: 10em;
+			color: rgba(255,255,255,.1);
+			background-image: url(https://images.unsplash.com/photo-1560698711-6df2370d7d62?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60);
+			background-repeat: repeat-x;
+			-webkit-background-clip: text;
+			animation: animate 15s linear infinite 
+		}
+		@keyframes animate {
+			0%
+			{
+				background-position: left 500px top 150px;
+			}
+			40%
+			{
+				background-position: left 4000px top 100px;
+			}
+
+		}
+		#canvas{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			box-shadow: 0 0 10px 0 #999;
+		}
+
+	</style>
+	<script type="text/javascript">
+		function init()
+	   	{
+	   		var canvas= document.getElementById('canvas');
+	   		var ctx= canvas.getContext('2d');
+	   		var w= canvas.width;
+	   		var h=canvas.height;
+
+	   		var flakes =[];
+	   		function snowfall()
+	   		{  ctx.clearRect(0,0, w , h);
+               addFlake();
+               snow();
+
+	   		};
+
+	   		function addFlake()
+	   		{
+               var x=Math.ceil(Math.random()*w);
+               var s=Math.ceil(Math.random()*4);
+               flakes.push({"x": x,"y": 0,"s": s});
+
+	   		};
+             
+             function snow()
+             {
+             	for (var i = 0 ; i < flakes.length; i++) {
+             		var flake = flakes[i];
+             		ctx.beginPath();
+             		ctx.fillStyle ="rgba(255,255,255,1)";
+             		ctx.arc(flake.x, flakes[i].y+=flake.s/2, flake.s/2,0,2*Math.PI);
+             		ctx.fill();
+             		if(flakes[i].y>h){
+             			flakes.splice(i,1);
+             		}
+
+             	};
+                  
+             }; 
+             setInterval(snowfall,20);
+		};
+		window.onload = init;
+	</script>
+	<div class="loader">
+	<h1>Fire</h1>	
+	</div>
+	<canvas id="canvas" width="700" height="720">
+		
+	</canvas>
+
+</body>
+</html>
